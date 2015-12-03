@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\UserSetting;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -23,7 +24,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
     protected $redirectPath = '/';
-    protected $redirectAfterLogout = '/';
+    protected $redirectAfterLogout = '/auth/login';
     protected $loginPath = '/auth/login';
     protected $maxLoginAttempts = 10;
 
@@ -60,11 +61,19 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($data['password'])
         ]);
+        
+        $user_settings = UserSetting::create([
+	        'user_id'	=> (int)$user->id,
+	        'role'		=> \App\Setting::getValue('default_role'),
+	        'theme'		=> \App\Setting::getValue('default_user_theme')
+        ]);
+        
+        return $user;
     }
     
     public function getRegister() {

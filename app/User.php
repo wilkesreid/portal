@@ -41,6 +41,12 @@ class User extends Model implements AuthenticatableContract,
 	    return $this->hasMany('App\Time');
     }
     public function theme() {
-	    return $this->belongsTo('App\Theme');
+	    return \App\Theme::find($this->settings->theme);
+    }
+    public function settings() {
+	    return $this->hasOne('App\UserSetting');
+    }
+    public function role() {
+	    return $this->settings->role;
     }
 }

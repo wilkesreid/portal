@@ -12,7 +12,7 @@ class UserController extends Controller
 {
 	
 	public function __construct() {
-		return $this->middleware('auth');
+		$this->middleware('auth');
 	}
 	
 	public function clock_in() {
@@ -27,9 +27,9 @@ class UserController extends Controller
 	
 	public function saveSettings(Request $request) {
 		$theme = $request->theme;
-		$user = Auth::user();
-		$user->theme_id = $theme;
-		$user->save();
+		$settings = Auth::user()->settings;
+		$settings->theme = $theme;
+		$settings->save();
 		return redirect('/user/settings');
 	}
 }

@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Role;
+use Response;
 
-class TimeController extends Controller
+class RoleController extends Controller
 {
 	
-	public function __controller() {
-		return $this->middleware('auth');
+	public function __construct() {
+		$this->middleware('admin');
 	}
     /**
      * Display a listing of the resource.
@@ -20,17 +22,7 @@ class TimeController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Response::json(Role::orderby('name','asc')->get());
     }
 
     /**
@@ -41,31 +33,12 @@ class TimeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Role::create([
+	        'name' => $request->json()->get('name')
+        ]);
+        
+        return Response::json(['success' => true]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -84,8 +57,9 @@ class TimeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($name)
     {
-        //
+	    if ($name != "administrator")
+        Role::where('name',$name)->delete();
     }
 }

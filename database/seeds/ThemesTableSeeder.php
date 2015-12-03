@@ -11,10 +11,15 @@ class ThemesTableSeeder extends Seeder
      */
     public function run()
     {
+	    DB::table('themes')->truncate();
+	    
+        $themes = ['cosmo','cyborg','journal','simplex','superhero'];
         
-        $theme = new App\Theme;
-        $theme->name = "Journal";
-        $theme->style_url = "/css/themes/journal/bootstrap.min.css";
-        $theme->save();
+        foreach ($themes as $theme) {
+	        $t = new App\Theme;
+	        $t->name = ucwords($theme);
+	        $t->style_url = "/css/themes/".$theme."/bootstrap.min.css";
+	        $t->save();
+        }
     }
 }

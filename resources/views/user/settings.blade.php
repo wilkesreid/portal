@@ -18,9 +18,10 @@ User Settings
 					$themes = App\Theme::orderBy('name','asc')->get()
 				}}
 				@foreach ($themes as $theme)
-				<option {{ (Auth::user()->theme->id == $theme->id) ? 'selected="selected"' : '' }} value="{{ $theme->id }}">{{ $theme->name }}</option>
+				<option {{ (Auth::user()->settings->theme == $theme->id) ? 'selected="selected"' : '' }} value="{{ $theme->id }}">{{ $theme->name }}</option>
 				@endforeach
 			</select>
+			<span class="help-block">The theme you see when logged in.</span>
 		</div>
 	</div>
 	<div class="form-group">

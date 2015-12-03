@@ -1,0 +1,15 @@
+<div class="modal-header">
+	<h3 class="modal-title">Delete {{modalCtrl.name}}</h3>
+</div>
+<div class="modal-body col-md-12">
+	<div class="alert alert-danger">
+		<strong>This cannot be undone.</strong> Are you sure you want to proceed?<br>
+		If so, please enter the name of the platform you are deleting.<br>
+		<br>
+		<input type="text" class="form-control" ng-model="modalCtrl.nameInput">
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="modalCtrl.cancel()">Cancel</button>
+	<button class="btn btn-danger" type="button" ng-click="modalCtrl.ok()">Delete</button>
+</div>

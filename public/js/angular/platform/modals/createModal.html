@@ -1,0 +1,33 @@
+<div class="modal-header">
+	<h3 class="modal-title">Create Platform</h3>
+</div>
+<div class="modal-body col-md-12">
+	<form class="form-horizontal" ng-show="modalCtrl.fromScratch">
+	<div class="form-group">
+		<label for="name" class="col-md-2 control-label">Name</label>
+		<div class="col-md-10">
+			<input type="text" class="form-control" ng-model="modalCtrl.name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="url" class="col-md-2 control-label">Url</label>
+		<div class="col-md-10">
+			<input type="text" class="form-control" ng-model="modalCtrl.url">
+		</div>
+	</div>
+	</form>
+	<a href class="text-info" ng-click="modalCtrl.toggleFromScratch()" ng-show="modalCtrl.fromScratch">Copy an existing platform</a>
+	<a href class="text-info" ng-click="modalCtrl.toggleFromScratch()" ng-hide="modalCtrl.fromScratch">Create from scratch</a>
+	<form class="form-horizontal" ng-hide="modalCtrl.fromScratch">
+	<div class="form-group">
+		<label for="search" class="col-md-2 control-label">Search</label>
+		<div class="col-md-10">
+			<input type="text" class="form-control" ng-model="modalCtrl.copySelected" uib-typeahead="platform for platform in modalCtrl.getPlatforms($viewValue)" typeahead-on-select="modalCtrl.finishSearch($item, $model, $label)">
+		</div>
+	</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="modalCtrl.cancel()">Cancel</button>
+	<button class="btn btn-primary" type="button" ng-click="modalCtrl.ok()">Save</button>
+</div>
