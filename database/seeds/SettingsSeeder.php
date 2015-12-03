@@ -16,11 +16,11 @@ class SettingsSeeder extends Seeder
 	    $settings = [
 		    [
 			    'name' => 'guest_theme',
-			    'value' => '2'
+			    'value' => '1'
 		    ],
 		    [
 			    'name' => 'default_user_theme',
-			    'value' => '2'
+			    'value' => '1'
 		    ],
 		    [
 			    'name' => 'default_role',
