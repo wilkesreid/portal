@@ -8,11 +8,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Credential;
 use Response;
+use Gate;
+use App;
 
 class CredentialController extends Controller
 {
 	public function __construct() {
 		$this->middleware('auth');
+		$this->middleware('pending');
 	}
     /**
      * Display a listing of the resource.
@@ -79,6 +82,9 @@ class CredentialController extends Controller
     {
         $cred = Credential::withTrashed()->find($id);
         if ($cred->trashed()) {
+	        if (Gate::denies('edit-passwords')) {
+		    	App::abort(403, 'Unauthorized action');
+	    	}
 	        $cred->forceDelete();
 	    } else {
 		    $cred->delete();

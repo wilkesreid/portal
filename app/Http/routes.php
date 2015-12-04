@@ -48,15 +48,17 @@ Route::group(['middleware' => 'auth'], function() {
 	});
 	
 	// Password Manager
-	Route::get('/clients', function() {
-		return view('passwords/home');
+	Route::group(['middleware' => 'pending'], function() {
+		Route::get('/clients', function() {
+			return view('passwords/home');
+		});
+		Route::get('/clients/{id}', ['as' => 'platforms', function($id) {
+			return View::make('passwords/client', [ 'client_id' => $id ]);
+		}]);
+		Route::get('/platforms/{id}', ['as' => 'credentials', function($id){
+			return View::make('passwords/platform', ['platform_id' => $id]);
+		}]);
 	});
-	Route::get('/clients/{id}', ['as' => 'platforms', function($id) {
-		return View::make('passwords/client', [ 'client_id' => $id ]);
-	}]);
-	Route::get('/platforms/{id}', ['as' => 'credentials', function($id){
-		return View::make('passwords/platform', ['platform_id' => $id]);
-	}]);
 });
 
 // RESTful resource routes

@@ -14,7 +14,7 @@
 				
 				<li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Home</a></li>
 				
-				@if ( Auth::check() )
+				@if ( Auth::check() && !Gate::denies('view-passwords'))
 				<li class="{{ Request::is('clients') ? 'active' : ''}}"><a href="/clients">Password Manager</a></li>
 				<!--<li class="{{ Request::is('time') ? 'active' : '' }}"><a href="/time">Time Tracking</a></li>-->
 				@endif

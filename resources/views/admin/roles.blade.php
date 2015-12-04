@@ -17,7 +17,7 @@ Admin Settings
 		<tbody>
 			<tr ng-repeat="role in roleCtrl.roles">
 				<td>
-					<span style='cursor:pointer;font-size:1.3em' class='fa fa-times text-danger' ng-hide="role.name == 'administrator'" ng-click="roleCtrl.delete(role.name)"></span>
+					<span style='cursor:pointer;font-size:1.3em' class='fa fa-times text-danger' ng-hide="role.name == 'administrator' || role.name == 'pending'" ng-click="roleCtrl.delete(role.name)"></span>
 				</td>
 				<td>@{{role.name}}</td>
 			</tr>

@@ -3,18 +3,35 @@
 	angular.module('app')
 	.controller('TrashedCredentialsModalInstanceController', modalInstanceController);
 	
-	function modalInstanceController(Credential, $uibModalInstance, $uibModal, trash) {
+	function modalInstanceController(Credential, $uibModalInstance, $uibModal, platform_id) {
 		var vm = this;
 		
-		vm.trash = trash;
+		vm.trash = {};
+		vm.platform_id = platform_id;
 		vm.permanent = true;
+		vm.loading = true;
 		
 		vm.cancel = cancel;
 		vm.delete = deleteCredential;
 		vm.restore = restoreCredential;
+		vm.getTrash = getTrash;
+		
+		vm.getTrash();
 		
 		function cancel() {
 			$uibModalInstance.close();
+		}
+		
+		function getTrash() {
+			vm.loading = true;
+			Credential.getTrash(vm.platform_id)
+			.success(function(response){
+				vm.loading = false;
+				vm.trash = response;
+			})
+			.error(function(response){
+				console.error(response);
+			});
 		}
 		
 		function deleteCredential(id, username) {
@@ -38,11 +55,7 @@
 			modalInstance.result.then(function(id){
 				Credential.delete(id)
 				.success(function(response){
-					for (i=0;i<vm.trash.length;i++) {
-						if (vm.trash[i].id == id) {
-							vm.trash.splice(i, 1);
-						}
-					}
+					vm.getTrash();
 				})
 				.error(function(response){
 					console.error(response);
@@ -53,11 +66,7 @@
 		function restoreCredential(id) {
 			Credential.restore(id)
 			.success(function(response){
-				for (i=0;i<vm.trash.length;i++) {
-					if (vm.trash[i].id == id) {
-						vm.trash.splice(i, 1);
-					}
-				}
+				vm.getTrash();
 			})
 			.error(function(response){
 				console.error(response);

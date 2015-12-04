@@ -9,9 +9,14 @@ use App\Http\Controllers\Controller;
 use Response;
 use App\Client;
 use Auth;
+use Gate;
 
 class ClientController extends Controller
 {
+	public function __construct() {
+		$this->middleware('auth');
+		$this->middleware('pending');
+	}
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +35,9 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+	    if (Gate::denies('edit-clients')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
         Client::create([
 	       'name'	=>	$request->json()->get('name')
         ]);
@@ -46,6 +54,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+	    if (Gate::denies('edit-clients')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
         Client::find($id)
         ->update([
 	        'name'	=>	$request->json()->get('name')
@@ -62,6 +73,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+	    if (Gate::denies('edit-clients')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
         Client::destroy($id);
         
         return Response::json([ 'success' => true ]);

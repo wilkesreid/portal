@@ -11,6 +11,10 @@ use Response;
 
 class PlatformController extends Controller
 {
+	public function __construct() {
+		$this->middleware('auth');
+		$this->middleware('pending');
+	}
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +41,9 @@ class PlatformController extends Controller
      */
     public function store(Request $request, $client_id)
     {
+	    if (Gate::denies('edit-platforms')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
 	    $platform = Platform::create([
 		    'name' => $request->name,
 		    'url' => $request->url,
@@ -54,6 +61,9 @@ class PlatformController extends Controller
      */
     public function update(Request $request, $client_id, $id)
     {
+	    if (Gate::denies('edit-platforms')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
         $platform = Platform::where('id',$id)->first();
         $platform->name = $request->name;
         $platform->url = $request->url;
@@ -70,6 +80,9 @@ class PlatformController extends Controller
      */
     public function destroy($client_id,$id)
     {
+	    if (Gate::denies('edit-platforms')) {
+		    App::abort(403, 'Unauthorized action');
+	    }
         Platform::destroy($id);
         
         return Response::json([ 'success' => true ]);

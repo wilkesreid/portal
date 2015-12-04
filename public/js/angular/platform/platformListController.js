@@ -8,6 +8,7 @@
 		
 		vm.platforms = {};
 		vm.client_id = window.client_id;
+		vm.loading = true;
 		
 		vm.get		= getPlatforms;
 		vm.delete	= deletePlatform;
@@ -18,8 +19,10 @@
 		vm.get();
 		
 		function getPlatforms() {
+			vm.loading = true;
 			Platform.get(vm.client_id)
 			.success(function(response){
+				vm.loading = false;
 				vm.platforms = response;
 			})
 			.error(function(response){

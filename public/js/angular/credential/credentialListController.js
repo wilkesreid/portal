@@ -9,6 +9,7 @@
 		vm.credentials = {};
 		vm.trash = {};
 		vm.platform_id = window.platform_id;
+		vm.loading = true;
 		
 		vm.get		= getCredentials;
 		vm.create	= createCredential;
@@ -21,8 +22,10 @@
 		vm.getTrash();
 		
 		function getCredentials() {
+			vm.loading = true;
 			Credential.get(vm.platform_id)
 			.success(function(response){
+				vm.loading = false;
 				vm.credentials = response;
 			})
 			.error(function(response){
@@ -46,8 +49,8 @@
 				templateUrl: '/js/angular/credential/modals/trashModal.html',
 				controller: 'TrashedCredentialsModalInstanceController as modalCtrl',
 				resolve: {
-					trash: function() {
-						return vm.trash;
+					platform_id: function() {
+						return vm.platform_id;
 					}
 				}
 			});

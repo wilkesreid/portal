@@ -27,7 +27,23 @@ class AuthServiceProvider extends ServiceProvider
         parent::registerPolicies($gate);
         
         $gate->define('update-admin-settings', function($user){
-	        return $user->role = "administrator";
+	        return $user->role() == "administrator";
+        });
+        
+        $gate->define('view-passwords', function($user) {
+	        return $user->role() != "pending";
+        });
+        
+        $gate->define('edit-clients', function($user) {
+	        return ($user->role() == "administrator");
+        });
+        
+        $gate->define('edit-platforms', function($user) {
+	        return ($user->role() == "administrator");
+        });
+        
+        $gate->define('edit-passwords', function($user) {
+	        return ($user->role() == "administrator");
         });
 
         //
