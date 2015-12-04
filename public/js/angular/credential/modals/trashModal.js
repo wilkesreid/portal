@@ -26,6 +26,9 @@
 			vm.loading = true;
 			Credential.getTrash(vm.platform_id)
 			.success(function(response){
+				for (i=0;i<response.length;i++) {
+					response[i].deleted_at = response[i].deleted_at.replace(" ","T");
+				}
 				vm.loading = false;
 				vm.trash = response;
 			})
