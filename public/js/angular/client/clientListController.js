@@ -26,6 +26,11 @@
 			
 			Client.get()
 			.success(function(response){
+				for (i=0;i<response.length;i++) {
+					if (response[i].name == "Internal") {
+						response.splice(i,1);
+					}
+				}
 				vm.clients = response;
 				vm.loading = false;
 			});
