@@ -21,7 +21,8 @@ User Settings
 				<option {{ (Auth::user()->settings->theme == $theme->id) ? 'selected="selected"' : '' }} value="{{ $theme->id }}">{{ $theme->name }}</option>
 				@endforeach
 			</select>
-			<span class="help-block">The theme you see when logged in.</span>
+			<div class="help-block">The theme you see when logged in.</div>
+			<div class="help-block">Themes from <a href="https://bootswatch.com">bootswatch.com</a></div>
 		</div>
 	</div>
 	<div class="form-group">

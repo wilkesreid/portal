@@ -21,7 +21,8 @@ Admin Settings
 				<option {{ (App\Setting::getValue('guest_theme') == $theme->id) ? 'selected="selected"' : '' }} value="{{ $theme->id }}">{{ $theme->name }}</option>
 				@endforeach
 			</select>
-			<span class="help-block">The theme seen by anyone not logged in.</span>
+			<div class="help-block">The theme seen by anyone not logged in.</div>
+			<div class="help-block">Themes from <a href="https://bootswatch.com">bootswatch.com</a></div>
 		</div>
 	</div>
 	<div class="form-group">
