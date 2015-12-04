@@ -10,6 +10,7 @@ use App\Credential;
 use Response;
 use Gate;
 use App;
+use Crypt;
 
 class CredentialController extends Controller
 {
@@ -45,7 +46,7 @@ class CredentialController extends Controller
     {
         Credential::create([
 	        'username' => $request->username,
-	        'password' => $request->password,
+	        'password' => Crypt::encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $platform_id
         ]);
@@ -65,7 +66,7 @@ class CredentialController extends Controller
         $cred = Credential::find($id);
         Credential::create([
 	        'username' => $request->username,
-	        'password' => $request->password,
+	        'password' => Crypt::encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $cred->platform_id
         ]);
