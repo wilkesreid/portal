@@ -10,7 +10,7 @@ Home
 	@if (!Gate::denies('edit-clients'))
 	<button type="button" class="btn btn-success" ng-click="clientListCtrl.create()"><span class="glyphicon glyphicon-plus"></span> New Client</button>
 	@endif
-	<a class="btn btn-info" href="/clients/1">Internal</a>
+	<a class="btn btn-info" href="/clients/{{App\Client::where('name','Internal')->first()->id}}">Internal</a>
 	<br><br>
 	<table class="table table-striped table-hover">
 		<thead>
