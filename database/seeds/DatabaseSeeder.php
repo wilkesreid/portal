@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ThemesTableSeeder::class);
         $this->call(SettingsSeeder::class);
         $this->call(RoleSeeder::class);
-        //$this->call(ClientSeeder::class);
+        $this->call(ClientSeeder::class);
         //$this->call(PlatformTableSeeder::class);
         //$this->call(CredentialSeeder::class);
 
