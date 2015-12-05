@@ -38,8 +38,8 @@ Home
 			</tr>
 		</tbody>
 	</table>
-	<div ng-show="listCtrl.loading">
-		Loading...
+	<div ng-show="listCtrl.loading" style="text-align:center">
+		<img src="/images/ajax-loader.gif">
 	</div>
 </div>
 
