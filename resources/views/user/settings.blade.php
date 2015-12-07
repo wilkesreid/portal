@@ -22,7 +22,7 @@ User Settings
 				@endforeach
 			</select>
 			<div class="help-block">The theme you see when logged in.</div>
-			<div class="help-block">Themes from <a href="https://bootswatch.com">bootswatch.com</a></div>
+			<div class="help-block">Themes from <a target="_blank" href="https://bootswatch.com">bootswatch.com</a></div>
 		</div>
 	</div>
 	<div class="form-group">
