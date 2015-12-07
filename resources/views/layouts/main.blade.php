@@ -13,6 +13,7 @@
 @else
 <link rel="stylesheet" href="{{ App\Theme::find(App\Setting::getValue('guest_theme'))->style_url }}">
 @endif
+<link rel="stylesheet" href="/css/custom.css">
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 
 <script src="/js/lib/angular.min.js"></script>

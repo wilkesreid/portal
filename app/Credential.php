@@ -24,4 +24,12 @@ class Credential extends Model
 	    else 
 	    return "";
     }
+    
+    public function getUsernameAttribute($value) {
+	    if ($value != "") {
+		    return Crypt::decrypt($value);
+	    } else {
+		    return "";
+	    }
+    }
 }

@@ -45,7 +45,7 @@ class CredentialController extends Controller
     public function store(Request $request, $platform_id)
     {
         Credential::create([
-	        'username' => $request->username,
+	        'username' => Crypt::encrypt($request->username),
 	        'password' => Crypt::encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $platform_id
@@ -65,7 +65,7 @@ class CredentialController extends Controller
     {
         $cred = Credential::find($id);
         Credential::create([
-	        'username' => $request->username,
+	        'username' => Crypt::encrypt($request->username),
 	        'password' => Crypt::encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $cred->platform_id
