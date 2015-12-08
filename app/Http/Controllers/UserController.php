@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use \App\Setting;
+use \App\User;
+use Hash;
 
 class UserController extends Controller
 {
@@ -31,5 +34,15 @@ class UserController extends Controller
 		$settings->theme = $theme;
 		$settings->save();
 		return redirect('/user/settings');
+	}
+	
+	public function setEncryptionKey(Request $request) {
+		$key = $request->key;
+		$key_hash = Setting::where('name','encryption_key')->first()->value;
+		if (Hash::check($key,$key_hash)) {
+			return redirect('/user/security')->withCookie(cookie()->forever('key',$key))->with('key','valid');
+		} else {
+			return redirect('/user/security')->with('key','invalid');
+		}
 	}
 }

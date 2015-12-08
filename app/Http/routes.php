@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth'], function() {
 			return view('user/settings');
 		});
 		Route::post('settings','UserController@saveSettings');
+		Route::get('security',function(){
+			return view('user/security');
+		});
+		Route::post('security','UserController@setEncryptionKey');
 	});
 	
 	// Admin
@@ -45,6 +49,10 @@ Route::group(['middleware' => 'auth'], function() {
 		Route::get('roles', function() {
 			return view('admin/roles');
 		});
+		Route::get('security',function(){
+			return view('admin/security');
+		});
+		Route::post('security','AdminController@saveEncryptionKey');
 	});
 	
 	// Password Manager

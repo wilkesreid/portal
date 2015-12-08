@@ -11,6 +11,10 @@ use Response;
 use Gate;
 use App;
 use Crypt;
+use Hash;
+use App\User;
+use App\Setting;
+use Config;
 
 class CredentialController extends Controller
 {
@@ -44,9 +48,18 @@ class CredentialController extends Controller
      */
     public function store(Request $request, $platform_id)
     {
+	    // Get encryption key from client
+	    $key = $request->cookie('key');
+	    // Get hashed encryption key from database
+	    $key_hash = Setting::where('name','encryption_key')->first()->value;
+	    // Check client's given key against hashed one in database
+	    if (!Hash::check($key,$key_hash)) {
+		    return abort(403,'Encryption key not correct');
+	    }
+	    $encrypter = new \Illuminate\Encryption\Encrypter( $key, Config::get( 'app.cipher' ) );
         Credential::create([
-	        'username' => Crypt::encrypt($request->username),
-	        'password' => Crypt::encrypt($request->password),
+	        'username' => $encrypter->encrypt($request->username),
+	        'password' => $encrypter->encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $platform_id
         ]);
@@ -63,10 +76,19 @@ class CredentialController extends Controller
      */
     public function update(Request $request, $id)
     {
+	    // Get encryption key from client
+	    $key = $request->cookie('key');
+	    // Get hashed encryption key from database
+	    $key_hash = Setting::where('name','encryption_key')->first()->value;
+	    // Check client's given key against hashed one in database
+	    if (!Hash::check($key,$key_hash)) {
+		    return abort(403,'Encryption key not correct');
+	    }
+	    $encrypter = new \Illuminate\Encryption\Encrypter( $key, Config::get( 'app.cipher' ) );
         $cred = Credential::find($id);
         Credential::create([
-	        'username' => Crypt::encrypt($request->username),
-	        'password' => Crypt::encrypt($request->password),
+	        'username' => $encrypter->encrypt($request->username),
+	        'password' => $encrypter->encrypt($request->password),
 	        'comments' => $request->comments,
 	        'platform_id' => $cred->platform_id
         ]);

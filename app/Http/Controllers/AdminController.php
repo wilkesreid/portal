@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Cookie;
+use Config;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -21,6 +24,56 @@ class AdminController extends Controller
 	    $setting->save();
 	    
 	    return redirect('/admin/settings');
+    }
+    
+    public function saveEncryptionKey(Request $request) {
+	    $key = $request->key;
+	    
+	    // Check if key is a valid key for the cipher
+	    if (\Illuminate\Encryption\Encrypter::supported($key,"AES-256-CBC") != true) {
+		    return redirect('/admin/security')->with('key','invalid');
+	    }
+	    
+	    // Get old hashed encryption key from database
+	    $key_hash = \App\Setting::where('name','encryption_key')->first()->value;
+	    
+	    // Get current client-provided key
+	    $current_key = Cookie::get('key');	    
+	    
+	    // Check client's given cookie key against old hashed one in database
+	    // to make sure their set cookie is correct
+	    if (!Hash::check($current_key,$key_hash) && $key_hash != "") {
+		    return redirect('/admin/security')->with('key','not_set');
+	    }
+	    
+	    // Create an encrypter using the new key for encrypting the
+	    // database
+	    $encrypter = new \Illuminate\Encryption\Encrypter( $key, Config::get( 'app.cipher' ) );
+		    
+		// Get models of all credentials
+	    $creds = \App\Credential::get();
+	    
+	    // Decrypt and re-encrypt database
+	    foreach ($creds as $cred) {
+		    $cred->username = $encrypter->encrypt($cred->username);
+		    
+		    $cred->password = $encrypter->encrypt($cred->password);
+		    
+		    $cred->save();
+	    }
+	    
+	    // Save new key in database
+	    $setting = \App\Setting::get('encryption_key');
+	    $setting->value = bcrypt($key);
+	    $setting->save();
+	    
+	    // Return if this is the first time we're setting the encryption key
+	    if ($key_hash == "") {
+		    return redirect('/admin/security')->with('key','valid');
+	    }
+	    
+	    
+	    return redirect('/admin/security')->with('key','valid');
     }
     
     public function saveUser(Request $request) {

@@ -30,7 +30,10 @@
 						Admin <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
+						@if (0)
 						<li><a href="/admin/roles"><span class="fa fa-unlock"></span> Roles</a></li>
+						@endif
+						<li><a href="/admin/security"><span class="fa fa-shield"></span> Security</a></li>
 						<li><a href="/admin/users"><span class="fa fa-users"></span> Users</a></li>
 						<li><a href="/admin/settings"><span class="fa fa-cog"></span> Settings</a></li>
 					</ul>
@@ -41,6 +44,7 @@
 						Profile <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a href="/user/security"><span class="fa fa-shield"></span> Security</a></li>
 						<li><a href="/user/settings"><span class="fa fa-cog"></span> Settings</a></li>
 						<li><a href="/auth/logout"><span class="fa fa-sign-out"></span> Logout</a></li>
 					</ul>

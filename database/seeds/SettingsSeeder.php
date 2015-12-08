@@ -25,6 +25,10 @@ class SettingsSeeder extends Seeder
 		    [
 			    'name' => 'default_role',
 			    'value' => 'user'
+		    ],
+		    [
+			    'name'	=>	'encryption_key',
+			    'value'	=>	''
 		    ]
 	    ];
         foreach ($settings as $setting) {
