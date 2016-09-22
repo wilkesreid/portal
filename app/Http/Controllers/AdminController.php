@@ -19,8 +19,24 @@ class AdminController extends Controller
     
     public function saveSettings(Request $request) {
 	    $theme = $request->theme;
+	    $website_check_days = $request->website_check_days;
+	    $pay_period_one = $request->pay_period_one;
+	    $pay_period_two = $request->pay_period_two;
+	    
 	    $setting = \App\Setting::get('guest_theme');
 	    $setting->value = $theme;
+	    $setting->save();
+	    
+	    $setting = \App\Setting::get('website_check_days');
+	    $setting->value = $website_check_days;
+	    $setting->save();
+	    
+	    $setting = \App\Setting::get('pay_period_one');
+	    $setting->value = $pay_period_one;
+	    $setting->save();
+	    
+	    $setting = \App\Setting::get('pay_period_two');
+	    $setting->value = $pay_period_two;
 	    $setting->save();
 	    
 	    return redirect('/admin/settings');

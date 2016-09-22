@@ -1,0 +1,17 @@
+<div class="modal-header">
+	<h3 class="modal-title">Connect <strong>{{ mc.teamwork_milestone.title | substring:0:mc.teamwork_milestone.title.length - 1 }}</strong> to Harvest Project</h3>
+</div>
+<div class="modal-body col-md-12">
+	<form class="form-horizontal">
+	<div class="form-group">
+		<label for="comapny" class="col-md-3 control-label">Harvest Project</label>
+		<div class="col-md-9">
+			<select class="form-control" ng-model="mc.harvest_project" ng-options="project as project.name group by project.client.name for project in mc.parent_vm.harvestProjects | orderBy:['client.name','name'] track by project.id"></select>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="mc.cancel()">Cancel</button>
+	<button class="btn btn-primary" type="button" ng-click="mc.ok()" ng-disabled="!mc.fieldsValid">Save</button>
+</div>

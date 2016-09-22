@@ -1,8 +1,6 @@
 @extends('layouts.main')
 
-@section('title')
-Home
-@stop
+@section('title', 'Portal - Password Manager')
 
 @section('body')
 <h1>Password Manager</h1>
@@ -25,8 +23,10 @@ Home
 			<tr ng-repeat="client in clientListCtrl.clients">
 				@if (!Gate::denies('edit-clients'))
 				<td>
+					@if (!Gate::denies('delete-clients'))
 					<span style="cursor:pointer;font-size:1.2em;" ng-click="clientListCtrl.delete(client.id,client.name)" class="fa fa-times text-danger"></span>
 					&nbsp;&nbsp;
+					@endif
 					<span style="cursor:pointer;font-size:1.2em;" ng-click="clientListCtrl.edit(client.id,client.name)" class="fa fa-pencil text-warning"></span>
 				</td>
 				@endif
@@ -35,7 +35,7 @@ Home
 		</tbody>
 	</table>
 	<div ng-show="clientListCtrl.loading" style="text-align:center">
-		<img src="/images/ajax-loader.gif">
+		<img src="/images/ajax-loader.svg">
 	</div>
 </div>
 

@@ -1,0 +1,12 @@
+<div class="modal-header">
+	<h3 class="modal-title">Delete {{ mc.name }}</h3>
+</div>
+<div class="modal-body">
+	<div class="alert alert-danger">
+		<strong>This cannot be undone.</strong> Are you sure you want to proceed?<br>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="mc.cancel()">Cancel</button>
+	<button class="btn btn-danger" type="button" ng-click="mc.ok()">Delete</button>
+</div>

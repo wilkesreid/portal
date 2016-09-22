@@ -31,6 +31,9 @@
 			var data = {
 				name: vm.newRoleName
 			};
+			if (data.name == "") {
+				return;
+			}
 			Role.create(data)
 			.success(function(response){
 				vm.get();

@@ -1,0 +1,78 @@
+<div class="modal-header">
+	<h3 class="modal-title">Create Field</h3>
+</div>
+<div class="modal-body col-sm-12">
+    <form class="form-horizontal">
+	<div class="form-group">
+    	<label class="control-label col-sm-2">Name</label>
+    	<div class="col-sm-10">
+        	<input class="form-control" type="text" ng-model="mc.name">
+    	</div>
+	</div>
+	<div class="form-group" ng-hide="mc.tag == 'choices'">
+    	<label class="control-label col-sm-2">Contents</label>
+    	<div class="col-sm-10">
+        	<textarea ng-if="mc.tag == 'textarea'" ng-model="mc.value" msd-elastic="\n" bg-attributes="mc.attributes"></textarea>
+            <input ng-if="mc.tag.startsWith('input')" ng-model="mc.value" bg-attributes="mc.attributes">
+            <boolean ng-if="mc.tag == 'boolean'" ng-model="mc.value"></boolean>
+            <section-heading ng-if="mc.tag == 'section-heading'" contents="mc.name"></section-heading>
+            <group-heading ng-if="mc.tag == 'group-heading'" contents="mc.name"></group-heading>
+            <small-heading ng-if="mc.tag == 'small-heading'" contents="mc.name"></small-heading>
+    	</div>
+	</div>
+	<div class="form-group" ng-if="mc.tag == 'choices'">
+    	<label class="control-label col-sm-2">Choices</label>
+    	<div class="col-sm-10">
+        	<div ng-repeat="choice in mc.options">
+            	<span class="input-group" style="margin: 5px 0">
+        	    <input class="form-control" type="text" ng-model="choice.name">
+        	    <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="mc.removeChoice(choice)"><span class="fa fa-minus"></span></button></span>
+        	    </span>
+        	</div>
+        	<button type="button" class="btn btn-success" ng-click="mc.addChoice()"><span class="fa fa-plus"></span></button>
+    	</div>
+	</div>
+	<div class="form-group" ng-if="mc.tag == 'choices'">
+    	<label class="control-label col-sm-2">Choice Type</label>
+    	<div class="col-sm-10">
+        	<select class="form-control" ng-model="mc.attributes.type">
+            	<option value="checkbox">Checkbox</option>
+            	<option value="radio">Radio</option>
+        	</select>
+    	</div>
+	</div>
+	<div class="form-group">
+    	<label class="control-label col-sm-2">Type</label>
+    	<div class="col-sm-10">
+        	<select class="form-control" ng-model="mc.tag">
+            	<option value="input:text">Text</option>
+            	<option value="textarea">Multi-line Text</option>
+            	<option value="boolean">Yes/No</option>
+            	<option value="file">File Upload</option>
+            	<option value="choices">Choices</option>
+            	<optgroup label="Preset Choices">
+            	    <option value="fou">Frequency of Use</option>
+            	    <option value="hostattend">Host or Attend</option>
+            	</optgroup>
+            	<optgroup label="Labels">
+            	    <option value="section-heading">Big Label</option>
+                	<option value="group-heading">Medium Label</option>
+                	<option value="small-heading">Small Label</option>
+            	</optgroup>
+        	</select>
+    	</div>
+	</div>
+	<div class="form-group">
+    	<label class="control-label col-sm-2">Width</label>
+    	<div class="col-sm-10">
+        	<div ui-slider min="0" max="12" lower-bound="1" data-step="1" data-tick ng-model="mc.column_size">
+        	</div>
+    	</div>
+    	<h4 style="text-align:center;margin-top:0" class="col-sm-10 col-sm-offset-2"><input type="number" ng-model="mc.column_size" style="width:40px;"> / 12</h4>
+	</div>
+    </form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="mc.cancel()">Cancel</button>
+	<button class="btn btn-success" type="button" ng-click="mc.ok()">Create</button>
+</div>

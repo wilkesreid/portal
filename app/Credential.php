@@ -17,7 +17,7 @@ class Credential extends Model
 {
 	use SoftDeletes;
 	
-    protected $fillable = ['username','password','comments', 'platform_id'];
+    protected $fillable = ['username','password','comments', 'platform_id', 'type'];
     
     protected $dates = ['deleted_at'];
     

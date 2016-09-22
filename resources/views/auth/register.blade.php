@@ -5,7 +5,7 @@ Register
 @stop
 
 @section('body')
-<form class="form-horizontal col-lg-6" method="post" action="/auth/register">
+<form class="form-horizontal col-sm-6 col-sm-offset-3" method="post" action="/auth/register">
 {!! csrf_field() !!}
 <fieldset>
 	<legend>Register</legend>

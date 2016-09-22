@@ -1,0 +1,5 @@
+<div ng-repeat="choice in field.options" class="col-sm-4">
+    <input ng-if="field.attributes.type == 'checkbox'" type="checkbox" ng-model="choice.selected" ng-click="vm.sendFieldChange(field)" ng-disabled="vm.frozen && !vm.logged_in">
+    <input ng-if="field.attributes.type == 'radio'" type="radio" ng-model="field.value" value="{{ choice.name }}" ng-click="vm.sendFieldChange(field)" ng-disabled="vm.frozen && !vm.logged_in">
+    <label class="choice-label">{{ choice.name }}</label>
+</div>

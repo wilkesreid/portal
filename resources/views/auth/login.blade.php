@@ -5,10 +5,10 @@ Login
 @stop
 
 @section('body')
-<form class="form-horizontal col-lg-6" method="post" action="/auth/login">
+<form class="form-horizontal col-sm-6 col-sm-offset-3" method="post" action="/auth/login">
 {!! csrf_field() !!}
 <fieldset>
-	<legend>Login</legend>
+	<legend>Log In</legend>
 	<div class="form-group">
 		<label for="email" class="col-lg-2 control-label">Email</label>
 		<div class="col-lg-10">
@@ -23,7 +23,7 @@ Login
 	</div>
 	<div class="form-group">
 		<div class="col-lg-10 col-lg-offset-2">
-			<input class="btn btn-primary" type="submit" value="Login">
+			<input class="btn btn-primary" type="submit" value="Log In">
 		</div>
 	</div>
 	<a class="col-lg-offset-2" href="/auth/register">Register</a>

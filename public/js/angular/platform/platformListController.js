@@ -3,7 +3,7 @@
 	angular.module('app')
 	.controller('PlatformListController', platformListController);
 	
-	function platformListController(Platform, $uibModal) {
+	function platformListController(Platform, Client, $uibModal) {
 		var vm = this;
 		
 		vm.platforms = {};
@@ -77,7 +77,7 @@
 			
 		}
 		
-		function editPlatform(id, name, url) {
+		function editPlatform(id, name, url, client_id) {
 			
 			var modalInstance = $uibModal.open({
 				animation: true,
@@ -92,6 +92,9 @@
 					},
 					url: function(){
 						return url;
+					},
+					client_id: function(){
+						return client_id;
 					}
 				}
 			});

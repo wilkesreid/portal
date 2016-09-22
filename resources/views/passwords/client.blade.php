@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Home
+Portal - Password Manager
 @stop
 
 <?php
@@ -30,9 +30,11 @@ Home
 			<tr ng-repeat="platform in platformListCtrl.platforms">
 				@if (!Gate::denies('edit-platforms'))
 				<td>
+					@if (!Gate::denies('delete-platforms'))
 					<span style="cursor:pointer;font-size:1.2em;" ng-click="platformListCtrl.delete(platform.id,platform.name)" class="fa fa-times text-danger"></span>
 					&nbsp;&nbsp;
-					<span style="cursor:pointer;font-size:1.2em;" ng-click="platformListCtrl.edit(platform.id,platform.name,platform.url)" class="fa fa-pencil text-warning"></span>
+					@endif
+					<span style="cursor:pointer;font-size:1.2em;" ng-click="platformListCtrl.edit(platform.id,platform.name,platform.url,platformListCtrl.client_id)" class="fa fa-pencil text-warning"></span>
 				</td>
 				@endif
 				<td><a href="/platforms/@{{platform.id}}">@{{platform.name}}</a></td>
@@ -41,13 +43,14 @@ Home
 		</tbody>
 	</table>
 	<div ng-show="platformListCtrl.loading" style="text-align:center">
-		<img src="/images/ajax-loader.gif">
+		<img src="/images/ajax-loader.svg">
 	</div>
 </div>
 
 <script>
 	window.client_id = {{$client_id}};
 </script>
+<script src="/js/angular/client/clientFactory.js"></script>
 <script src="/js/angular/platform/platformFactory.js"></script>
 <script src="/js/angular/platform/platformListController.js"></script>
 <script src="/js/angular/platform/modals/createModal.js"></script>

@@ -1,0 +1,41 @@
+<div class="modal-header">
+	<h3 style="float:left; margin-right: 25px" class="modal-title">Today's Timesheet</h3>
+	<button type="button" class="btn btn-success" ng-click="mc.view = 'new-entry'" ng-show="mc.view != 'new-entry'"><span class="fa fa-plus"></span> New Entry</button>
+	<button type="button" class="btn btn-default" ng-click="mc.view = 'entries'" ng-show="mc.view != 'entries'"><span class="fa fa-arrow-left"></span> Back</button>
+</div>
+<div ng-show="mc.view == 'entries'" class="modal-body col-md-12">
+    <div ng-show="mc.loading" style="text-align:center">
+	    <img src="/images/ajax-loader.svg">
+    </div>
+	<table ng-hide="mc.loading" style="width:100%">
+    	<tr style="border-bottom:1px solid #444" ng-repeat="entry in mc.daily">
+        	<td>
+            	<div><strong>{{ entry.project }}</strong> ({{ entry.client }})</div>
+            	<p>{{ entry.task }} – <span>{{ entry.notes }}</span></p>
+        	</td>
+        	<td style="text-align:right;font-size:2em;">
+            	<strong>{{ entry.hours }}</strong>
+        	</td>
+    	</tr>
+	</table>
+</div>
+<div ng-show="mc.view == 'new-entry'" class="modal-body col-md-12">
+    <form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-sm-2">Task</label>
+        <div class="col-sm-10">
+            <select class="form-control" ng-model="mc.newEntry.task_id" ng-options="task as task.name for task in mc.tasks | orderBy:['task.billable_by_default'] track by task.id"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Description</label>
+        <div class="col-sm-10">
+            <input type="textarea" ng-model="mc.newEntry.description" class="form-control">
+        </div>
+    </div>
+    </form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="mc.cancel()">Close</button>
+	<button class="btn btn-primary" type="button" ng-click="mc.startTimer()" ng-show="mc.view == 'new-entry'">Start Timer</button>
+</div>

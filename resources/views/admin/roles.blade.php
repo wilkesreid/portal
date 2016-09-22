@@ -19,7 +19,7 @@ Admin Settings
 				<td>
 					<span style='cursor:pointer;font-size:1.3em' class='fa fa-times text-danger' ng-hide="role.name == 'administrator' || role.name == 'pending'" ng-click="roleCtrl.delete(role.name)"></span>
 				</td>
-				<td>@{{role.name}}</td>
+				<td><a href="/admin/roles/@{{role.name}}">@{{role.name}}</a></td>
 			</tr>
 		</tbody>
 	</table>

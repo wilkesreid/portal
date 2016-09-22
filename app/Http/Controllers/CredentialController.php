@@ -20,7 +20,7 @@ class CredentialController extends Controller
 {
 	public function __construct() {
 		$this->middleware('auth');
-		$this->middleware('pending');
+		$this->middleware('passwordmanager');
 	}
     /**
      * Display a listing of the resource.
@@ -28,16 +28,28 @@ class CredentialController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-	    return Response::json(Credential::get());
+	    if (!Gate::denies('view-management-passwords')) {
+	    	return Response::json(Credential::get());
+	    } else {
+		    return Response::json(Credential::where('type','!=','management')->get());
+	    }
     }
     
     public function indexOfPlatform($platform_id)
     {
-        return Response::json(Credential::where('platform_id',$platform_id)->get());
+	    if (!Gate::denies('view-management-passwords')) {
+        	return Response::json(Credential::where('platform_id',$platform_id)->get());
+        } else {
+	        return Response::json(Credential::where('type','!=','management')->where('platform_id',$platform_id)->get());
+        }
     }
     
     public function indexTrashedOfPlatform($platform_id) {
-	    return Response::json(Credential::onlyTrashed()->where('platform_id',$platform_id)->get());
+	    if (!Gate::denies('view-management-passwords')) {
+	    	return Response::json(Credential::onlyTrashed()->where('platform_id',$platform_id)->get());
+	    } else {
+		    return Response::json(Credential::onlyTrashed()->where('type','!=','management')->where('platform_id',$platform_id)->get());
+	    }
     }
 
     /**
@@ -90,7 +102,8 @@ class CredentialController extends Controller
 	        'username' => $encrypter->encrypt($request->username),
 	        'password' => $encrypter->encrypt($request->password),
 	        'comments' => $request->comments,
-	        'platform_id' => $cred->platform_id
+	        'platform_id' => $cred->platform_id,
+	        'type'		=> $request->type
         ]);
         $cred->delete();
     }

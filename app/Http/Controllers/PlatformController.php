@@ -14,7 +14,7 @@ class PlatformController extends Controller
 {
 	public function __construct() {
 		$this->middleware('auth');
-		$this->middleware('pending');
+		$this->middleware('passwordmanager');
 	}
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class PlatformController extends Controller
      */
     public function index($client_id)
     {
-        return Response::json(Platform::where('client_id',$client_id)->get());
+        return Response::json(Platform::where('client_id',$client_id)->orderby('name','asc')->get());
     }
     
     public function search($name) {
@@ -31,7 +31,7 @@ class PlatformController extends Controller
     }
     
     public function indexByName($name) {
-	    return Response::json(Platform::where('name',$name)->first());
+	    return Response::json(Platform::where('name',$name)->orderby('name','asc')->first());
     }
 
     /**
@@ -81,7 +81,7 @@ class PlatformController extends Controller
      */
     public function destroy($client_id,$id)
     {
-	    if (Gate::denies('edit-platforms')) {
+	    if (Gate::denies('delete-platforms')) {
 		    App::abort(403, 'Unauthorized action');
 	    }
         Platform::destroy($id);

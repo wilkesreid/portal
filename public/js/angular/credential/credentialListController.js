@@ -3,13 +3,14 @@
 	angular.module('app')
 	.controller('CredentialListController', credentialListController);
 	
-	function credentialListController(Credential, $uibModal) {
+	function credentialListController(Credential, $uibModal, $scope) {
 		var vm = this;
 		
 		vm.credentials = {};
 		vm.trash = {};
 		vm.platform_id = window.platform_id;
 		vm.loading = true;
+		vm.copyPopup = "Click to Copy";
 		
 		vm.get		= getCredentials;
 		vm.create	= createCredential;
@@ -17,6 +18,9 @@
 		vm.getTrash	= getTrashedCredentials;
 		vm.viewTrash = viewTrash;
 		vm.delete	= deleteCredential;
+		vm.copySuccess = copySuccess;
+		vm.copyError = copyError;
+		vm.resetCopyPopup = resetCopyPopup;
 		
 		vm.get();
 		vm.getTrash();
@@ -111,7 +115,7 @@
 			
 		}
 		
-		function editCredential(id, username, password, comments) {
+		function editCredential(id, username, password, comments, type) {
 			
 			var modalInstance = $uibModal.open({
 				animation: true,
@@ -129,6 +133,9 @@
 					},
 					comments: function(){
 						return comments;
+					},
+					type: function(){
+						return type;
 					}
 				}
 			});
@@ -144,6 +151,18 @@
 				});
 			});
 			
+		}
+		
+		function copySuccess(e) {
+			vm.copyPopup = "Copied!"
+			$scope.$apply();
+		}
+		function copyError(e) {
+			vm.copyPopup = "Command-C to copy"
+			$scope.$apply();
+		}
+		function resetCopyPopup() {
+			vm.copyPopup = "Click to Copy";
 		}
 	}
 	

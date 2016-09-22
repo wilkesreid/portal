@@ -1,0 +1,57 @@
+<div class="modal-header">
+	<h3 class="modal-title">Create Milestone {{mc.name_prefix}} {{mc.name}}</h3>
+</div>
+<div class="modal-body col-md-12">
+	<form class="form-horizontal">
+	<div class="form-group">
+		<label for="comapny" class="col-md-3 control-label">Teamwork Company</label>
+		<div class="col-md-9">
+			<select class="form-control" ng-model="mc.company" ng-change="mc.autoselectProject()" ng-options="company as company.name for company in mc.parent_vm.companies track by company.id"></select>
+		</div>
+	</div>
+	<div class="form-group" ng-show="mc.company.projects.length > 1">
+		<label for="project" class="col-md-3 control-label">Teamwork Project</label>
+		<div class="col-md-9">
+			<select class="form-control" ng-model="mc.project" ng-options="project as project.name for project in mc.company.projects track by project.id"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="user" class="col-md-3 control-label">Responsible People</label>
+		<div class="col-md-9">
+    		<img src="/images/ajax-loader-small.svg" ng-show="mc.peopleLoading">
+			<select ng-hide="mc.peopleLoading" multiple="true" class="form-control" ng-model="mc.responsible_people" ng-options="person as person.name for person in mc.people track by person.id"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="tacticType" class="col-md-3 control-label">Type</label>
+		<div class="col-md-9">
+			<select class="form-control" ng-change="mc.getTactics(mc.tacticType)" ng-model="mc.tacticType" ng-options="tacticType as tacticType.name for tacticType in mc.tacticTypes track by tacticType.id"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="tactic" class="col-md-3 control-label">Tactic</label>
+		<div class="col-md-9">
+			<select class="form-control" ng-hide="mc.loadingTactics" ng-model="mc.tactic" ng-options="tactic as tactic.name for tactic in mc.tactics track by tactic.id"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-md-3 control-label">Project Name</label>
+		<div class="col-md-9">
+			<input type="text" class="form-control" ng-model="mc.description">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="dateDue" class="col-md-3 control-label">Date Due</label>
+		<div class="col-md-9">
+    		<p class="input-group">
+			<input type="text" class="form-control" ng-model="mc.duedate" uib-datepicker-popup is-open="mc.datepopup.open">
+			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="mc.datePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>
+    		</p>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" type="button" ng-click="mc.cancel()">Cancel</button>
+	<button class="btn btn-primary" type="button" ng-click="mc.ok()">Create</button>
+</div>

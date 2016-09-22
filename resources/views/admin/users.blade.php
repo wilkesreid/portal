@@ -19,7 +19,7 @@ Users
 @foreach (App\User::all() as $user)
 <tr>
 <td ng-controller="deleteUserModalController as modal">
-<a style="cursor:pointer" ng-click="modal.open({{$user->id}},'{{$user->name}}')"><span class="glyphicon glyphicon-remove"></span></a>
+<a style="cursor:pointer" ng-click="modal.open({{$user->id}},'{{addslashes($user->name)}}')"><span class="glyphicon glyphicon-remove"></span></a>
 &nbsp;
 &nbsp;
 <a href="/admin/users/{{$user->id}}"><span class="glyphicon glyphicon-edit"></span></a></td>
